@@ -118,29 +118,27 @@
     function getPath(elem) {
         let path = [];
         let unresolved = [elem];
+        let resolved = [];
         let starter = ['Water', 'Fire', 'Earth', 'Wind'];
         if (combinations[elem] === undefined) {
             throw new Error('No such element found in combinations list.');
         }
         while (unresolved.length > 0) {
-            const e = decodeURIComponent(unresolved[0]);
-            const c1 = decodeURIComponent(combinations[e][0]);
-            const c2 = decodeURIComponent(combinations[e][1]);
+            let e = decodeURIComponent(unresolved[0]);
+            let c1 = decodeURIComponent(combinations[e][0]);
+            let c2 = decodeURIComponent(combinations[e][1]);
             if (c1 === undefined || c2 === undefined) {
                 return 0;
             }
+            if (!(starter.includes(c1)) && !(resolved.includes(c1)) && !(unresolved.includes(c1))) {
+                unresolved.push(c1);
+            }
+            if (!(starter.includes(c2)) && !(resolved.includes(c2)) && !(unresolved.includes(c2))) {
+                unresolved.push(c2);
+            }
+            let next = unresolved.shift();
+            resolved.push(next);
             path.push(c1 + ' + ' + c2 + ' = ' + e);
-            if (!(starter.includes(c1))) {
-                if (!(unresolved.includes(c1))) {
-                    unresolved.push(c1);
-                }
-            }
-            if (!(starter.includes(c2))) {
-                if (!(unresolved.includes(c2))) {
-                    unresolved.push(c2);
-                }
-            }
-            unresolved.shift();
         }
         return path.reverse();
     }
