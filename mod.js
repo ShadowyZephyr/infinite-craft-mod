@@ -15,7 +15,7 @@
     autoCraft.textContent = 'Auto Craft';
     autoCraft.style.position = 'absolute';
     autoCraft.style.left = '0.5%';
-    autoCraft.style.bottom = '3%';
+    autoCraft.style.bottom = '7%';
     autoCraft.style.backgroundColor = 'green';
     autoCraft.style.color = 'white';
     autoCraft.style.border = 'none';
@@ -27,7 +27,7 @@
     exporter.textContent = 'Export Path';
     exporter.style.position = 'absolute';
     exporter.style.left = '0.5%';
-    exporter.style.bottom = '8%';
+    exporter.style.bottom = '17%';
     exporter.style.backgroundColor = 'blue';
     exporter.style.color = 'white';
     exporter.style.border = 'none';
