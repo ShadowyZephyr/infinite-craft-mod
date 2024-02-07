@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         InfiniteCraft Mod
 // @namespace    https://shadowyzephyr.github.io
-// @version      1.11
+// @version      1.2
 // @description  mod
 // @author       ShadowyZephyr
 // @match        https://neal.fun/infinite-craft/
@@ -25,11 +25,23 @@ window.addEventListener('load', function() {
     autoCraft.style.cursor = 'pointer';
     autoCraft.addEventListener('click', run);
     document.body.appendChild(autoCraft);
+    const autoCraftWithElem = document.createElement('button');
+    autoCraftWithElem.textContent = 'Auto Craft With Element';
+    autoCraftWithElem.style.position = 'absolute';
+    autoCraftWithElem.style.left = '0.5%';
+    autoCraftWithElem.style.bottom = '17%';
+    autoCraftWithElem.style.backgroundColor = 'purple';
+    autoCraftWithElem.style.color = 'white';
+    autoCraftWithElem.style.border = 'none';
+    autoCraftWithElem.style.padding = '10px 20px';
+    autoCraftWithElem.style.cursor = 'pointer';
+    autoCraftWithElem.addEventListener('click', run2);
+    document.body.appendChild(autoCraftWithElem);
     const exporter = document.createElement('button');
     exporter.textContent = 'Export Path';
     exporter.style.position = 'absolute';
     exporter.style.left = '0.5%';
-    exporter.style.bottom = '17%';
+    exporter.style.bottom = '27%';
     exporter.style.backgroundColor = 'blue';
     exporter.style.color = 'white';
     exporter.style.border = 'none';
@@ -52,6 +64,7 @@ window.addEventListener('load', function() {
         localStorage.setItem('combinations', '{}')
     }
     let running = false;
+    let running2 = false;
     const fetchObserver = new PerformanceObserver((list) => {
         for (const entry of list.getEntries()) {
             if (entry.initiatorType === "fetch") {
@@ -66,7 +79,6 @@ window.addEventListener('load', function() {
     fetchObserver.observe({
         entryTypes: ["resource"]
     });
-   
     function run() {
         if (autoCraft.style.backgroundColor === 'green') {
             autoCraft.style.backgroundColor = 'red';
@@ -78,6 +90,19 @@ window.addEventListener('load', function() {
         running = !running;
         if (running) {
             auto();
+        }
+    }
+    function run2() {
+        if (autoCraftWithElem.style.backgroundColor === 'purple') {
+            autoCraftWithElem.style.backgroundColor = 'red';
+            autoCraftWithElem.textContent = 'Stop Crafting';
+        } else {
+            autoCraftWithElem.style.backgroundColor = 'purple';
+            autoCraftWithElem.textContent = 'Auto Craft With Element';
+        }
+        running2 = !running2;
+        if (running2) {
+            inputCraft(window.prompt('Input element to craft with (case-sensitive)'));
         }
     }
     const domObserver = new MutationObserver((mutations) => {
@@ -96,6 +121,9 @@ window.addEventListener('load', function() {
         subtree: true
     });
     async function auto() {
+        running2 = false;
+        autoCraftWithElem.style.backgroundColor = 'purple';
+        autoCraftWithElem.textContent = 'Auto Craft With Element';
         let amount = elements.children.length;
         for (let sender = 0; sender < amount; sender++) {
             for (let receiver = 0; receiver < amount; receiver++) {
@@ -118,6 +146,27 @@ window.addEventListener('load', function() {
             }
         }
         auto();
+    }
+    async function inputCraft(elem) {
+        running = false;
+        autoCraft.style.backgroundColor = 'green';
+        autoCraft.textContent = 'Auto Craft';
+        let amount = elements.children.length;
+        for (let i = 0; i < amount - 1; i++) {
+            if (!running2) {
+                await new Promise(r => setTimeout(r, 100));
+                return;
+            }   
+            const y = document.getElementById('item-' + elem)
+            const x = elements. children[i].children[0];
+            x.click();
+            y.click();
+            while (x.classList.contains('item-selected-mobile')) {
+                await new Promise(r => setTimeout(r, 50));
+            }
+            await new Promise(r => setTimeout(r, 180)); // Could go faster but you get rate limited       
+        }
+        inputCraft();
     }
     function removeDuplicates(arr) {
         return [...new Set(arr)];
