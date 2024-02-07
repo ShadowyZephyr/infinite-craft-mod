@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         InfiniteCraft Mod
 // @namespace    https://shadowyzephyr.github.io
-// @version      1.0
+// @version      1.1
 // @description  mod
 // @author       ShadowyZephyr
 // @match        https://neal.fun/infinite-craft/
