@@ -136,7 +136,7 @@
                 }
             }
             if (!(starter.includes(c2))) {
-                if (!(unresolved.includes(c1))) {
+                if (!(unresolved.includes(c2))) {
                     unresolved.push(c2);
                 }
             }
