@@ -133,7 +133,7 @@ window.addEventListener('load', function() {
             let c1 = decodeURIComponent(combinations[e][0]);
             let c2 = decodeURIComponent(combinations[e][1]);
             if (c1 === undefined || c2 === undefined) {
-                return 0;
+                return 0; // yes I know this is bad I'm lazy rn
             }
             if (!(starter.includes(c1)) && !(unresolved.includes(c1))) {
                 unresolved.push(c1);

@@ -1,3 +1,5 @@
 This is a mod for the game "Infinite Craft" on neal.fun (https://neal.fun/infinite-craft/).
 
 This is intended to be used with TamperMonkey, but you can also just paste into the console every time you open the website, or run as a js snippet in dev tools.
+
+IMPORTANT: For exporting path to work properly you MUST reset your progress before inserting the script, and don't combine without it on or it can't log those recipes.
