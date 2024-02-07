@@ -111,7 +111,7 @@
                 while (x.classList.contains('item-selected-mobile')) {
                     await new Promise(r => setTimeout(r, 50));
                 }
-                await new Promise(r => setTimeout(r, 150)); // Could go faster but you get rate limited
+                await new Promise(r => setTimeout(r, 180)); // Could go faster but you get rate limited
             }
         }
         auto();
