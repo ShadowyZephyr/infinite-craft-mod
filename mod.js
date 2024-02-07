@@ -63,7 +63,7 @@
     fetchObserver.observe({
         entryTypes: ["resource"]
     });
-    
+   
     function run() {
         if (autoCraft.style.backgroundColor === 'green') {
             autoCraft.style.backgroundColor = 'red';
@@ -81,8 +81,10 @@
         setTimeout(() => {
             const e = elements.children;
             const result = e[e.length - 1].children[0].id.slice(5);
-            combinations[result] = [lastFetch[0], lastFetch[1]];
-            localStorage.setItem('combinations', JSON.stringify(combinations));
+            if (combinations[result] === undefined) {
+                combinations[result] = [lastFetch[0], lastFetch[1]];
+                localStorage.setItem('combinations', JSON.stringify(combinations)); 
+            }
         }, 40);
     });
     const targetNode = document.querySelector('.sidebar');
@@ -114,11 +116,12 @@
         }
         auto();
     }
-    
+    function removeDuplicates(arr) {
+        return [...new Set(arr)];
+    }
     function getPath(elem) {
         let path = [];
         let unresolved = [elem];
-        let resolved = [];
         let starter = ['Water', 'Fire', 'Earth', 'Wind'];
         if (combinations[elem] === undefined) {
             throw new Error('No such element found in combinations list.');
@@ -130,19 +133,17 @@
             if (c1 === undefined || c2 === undefined) {
                 return 0;
             }
-            if (!(starter.includes(c1)) && !(resolved.includes(c1)) && !(unresolved.includes(c1))) {
+            if (!(starter.includes(c1)) && !(unresolved.includes(c1))) {
                 unresolved.push(c1);
             }
-            if (!(starter.includes(c2)) && !(resolved.includes(c2)) && !(unresolved.includes(c2))) {
+            if (!(starter.includes(c2)) && !(unresolved.includes(c2))) {
                 unresolved.push(c2);
             }
-            let next = unresolved.shift();
-            resolved.push(next);
+            unresolved.shift();
             path.push(c1 + ' + ' + c2 + ' = ' + e);
         }
-        return path.reverse();
+        return removeDuplicates(path.reverse());
     }
-    
     function exportPath() {
         let elem = window.prompt('Type element name (case-sensitive)');
         let toExport = '';
@@ -156,12 +157,12 @@
         let element = document.createElement('a');
         element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(toExport));
         element.setAttribute('download', elem + '-path.txt');
-    
+   
         element.style.display = 'none';
         document.body.appendChild(element);
-    
+   
         element.click();
-    
+   
         document.body.removeChild(element);
     }
-    })();
+})();
