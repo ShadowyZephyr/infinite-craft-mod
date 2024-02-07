@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         InfiniteCraft Mod
 // @namespace    https://shadowyzephyr.github.io
-// @version      1.1
+// @version      1.11
 // @description  mod
 // @author       ShadowyZephyr
 // @match        https://neal.fun/infinite-craft/
@@ -9,7 +9,9 @@
 // @grant        none
 // ==/UserScript==
 
+
 (function() {
+window.addEventListener('load', function() {
     //You must reset your progress for export paths to work properly, if you have played the game without using this script. (If you want it to work, run from console each time you open the game, or use TamperMonkey, so it saves all combinations)
     const autoCraft = document.createElement('button');
     autoCraft.textContent = 'Auto Craft';
@@ -164,5 +166,6 @@
         element.click();
    
         document.body.removeChild(element);
-    }
+    }        
+}, false);
 })();
