@@ -49,6 +49,7 @@ window.addEventListener('load', function() {
     }
     reset.onclick = function() {
         pairs = [];
+        localStorage.setItem('combinations', '{}')
     }
     let running = false;
     const fetchObserver = new PerformanceObserver((list) => {
