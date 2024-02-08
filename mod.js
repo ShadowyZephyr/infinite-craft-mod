@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         InfiniteCraft Mod
 // @namespace    https://shadowyzephyr.github.io
-// @version      1.3.1
+// @version      1.3.2
 // @description  mod
 // @author       ShadowyZephyr
 // @match        https://neal.fun/infinite-craft/
@@ -66,6 +66,7 @@ let f = function() {
     let lastFetch;
     let elements = document.getElementsByClassName("mobile-items")[0];
     let combinations = localStorage.getItem('combinations');
+    let importUpdate = false;
     if (combinations === null || combinations === '') {
         combinations = {};
     } else {
@@ -118,6 +119,7 @@ let f = function() {
         }
     }
     const domObserver = new MutationObserver((mutations) => {
+        importUpdate = true;
         setTimeout(() => {
             elements = document.getElementsByClassName("mobile-items")[0];
             const r = {discoveries: window.$nuxt.$root.$children[2].$children[0].$children[0]._data.discoveries, elements:window.$nuxt.$root.$children[2].$children[0].$children[0]._data.elements};
@@ -263,10 +265,13 @@ let f = function() {
                 let elem2 = document.getElementById('item-' + text[1].trim());
                 elem1.click();
                 elem2.click();
-                while (elem1.classList.contains('item-selected-mobile')) {
-                    await new Promise(r => setTimeout(r, 50));
+                for(let j = 0; j < 15; j++) {
+                    if (!importUpdate) {
+                        await new Promise(r => setTimeout(r, 50));
+                    }
                 }
                 await new Promise(r => setTimeout(r, 200));
+                importUpdate = false;
             }
         }
     }        
