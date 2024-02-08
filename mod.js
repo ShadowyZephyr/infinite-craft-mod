@@ -263,7 +263,7 @@ f = function() {
                 let elem2 = document.getElementById('item-' + text[1].trim());
                 elem1.click();
                 elem2.click();
-                await new Promise(r => setTimeout(r, 200));
+                await new Promise(r => setTimeout(r, 330));
             }
         }
     }        
