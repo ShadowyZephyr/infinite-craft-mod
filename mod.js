@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         InfiniteCraft Mod
 // @namespace    https://shadowyzephyr.github.io
-// @version      1.3.2
+// @version      1.3.3
 // @description  mod
 // @author       ShadowyZephyr
 // @match        https://neal.fun/infinite-craft/
@@ -86,6 +86,7 @@ let f = function() {
                 call.shift();
                 call[0] = call[0].substring(0, call[0].length - 7);
                 lastFetch = call;
+                importUpdate = true;
             }
         }
     });
@@ -119,7 +120,7 @@ let f = function() {
         }
     }
     const domObserver = new MutationObserver((mutations) => {
-        importUpdate = true;
+
         setTimeout(() => {
             elements = document.getElementsByClassName("mobile-items")[0];
             const r = {discoveries: window.$nuxt.$root.$children[2].$children[0].$children[0]._data.discoveries, elements:window.$nuxt.$root.$children[2].$children[0].$children[0]._data.elements};
