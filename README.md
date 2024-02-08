@@ -14,3 +14,4 @@ AUTO CRAFT WITH ELEMENT - Type in the element name, and it will craft that eleme
 EXPORT PATH - Type in the element name, and it saves a text file on your computer saying how to get that element.
 
 IMPORT PATH - Select a path from your computer, and it tries to make all the elements in it. If an element in the path has the character "+" or "=" in it, it will break because it uses those to parse combinations.
+Importing is still buggy, if it just stops for some reason, try doing it again, if not you can just make the elements manually. 

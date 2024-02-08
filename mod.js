@@ -265,7 +265,7 @@ let f = function() {
                 let elem2 = document.getElementById('item-' + text[1].trim());
                 elem1.click();
                 elem2.click();
-                for(let j = 0; j < 15; j++) {
+                for(let j = 0; j < 20; j++) {
                     if (!importUpdate) {
                         await new Promise(r => setTimeout(r, 50));
                     }
