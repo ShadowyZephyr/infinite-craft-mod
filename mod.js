@@ -11,7 +11,7 @@
 
 
 (function() {
-f = function() {
+let f = function() {
     //You must reset your progress for export paths to work properly, if you have played the game without using this script. (If you want it to work, run from console each time you open the game, or use TamperMonkey, so it saves all combinations)
     const autoCraft = document.createElement('button');
     autoCraft.textContent = 'Auto Craft';
