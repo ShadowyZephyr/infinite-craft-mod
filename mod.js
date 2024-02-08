@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         InfiniteCraft Mod
 // @namespace    https://shadowyzephyr.github.io
-// @version      1.2.1
+// @version      1.2.2
 // @description  mod
 // @author       ShadowyZephyr
 // @match        https://neal.fun/infinite-craft/
@@ -108,13 +108,14 @@ window.addEventListener('load', function() {
     const domObserver = new MutationObserver((mutations) => {
         setTimeout(() => {
             elements = document.getElementsByClassName("mobile-items")[0];
-            const e = elements.children;
-            const result = e[e.length - 1].children[0].id.slice(5);
+            const r = {discoveries: window.$nuxt.$root.$children[2].$children[0].$children[0]._data.discoveries, elements:window.$nuxt.$root.$children[2].$children[0].$children[0]._data.elements};
+            const result = r.elements[r.elements.length-1].text;
+            console.log(result);
             if (combinations[result] === undefined) {
                 combinations[result] = [lastFetch[0], lastFetch[1]];
                 localStorage.setItem('combinations', JSON.stringify(combinations)); 
             }
-        }, 40);
+        }, 75);
     });
     const targetNode = document.querySelector('.sidebar');
     domObserver.observe(targetNode, {
@@ -183,6 +184,9 @@ window.addEventListener('load', function() {
         }
         while (unresolved.length > 0) {
             let e = decodeURIComponent(unresolved[0]);
+            if (combinations[e] == undefined) {
+                console.log('failed at' + e);
+            }
             let c1 = decodeURIComponent(combinations[e][0]);
             let c2 = decodeURIComponent(combinations[e][1]);
             if (c1 === undefined || c2 === undefined) {
