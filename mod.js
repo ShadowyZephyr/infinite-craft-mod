@@ -166,7 +166,9 @@ window.addEventListener('load', function() {
             }
             await new Promise(r => setTimeout(r, 180)); // Could go faster but you get rate limited       
         }
-        inputCraft();
+        running2 = false;
+        autoCraftWithElem.style.backgroundColor = 'purple';
+        autoCraftWithElem.textContent = 'Auto Craft With Element';
     }
     function removeDuplicates(arr) {
         return [...new Set(arr)];
