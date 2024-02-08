@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         InfiniteCraft Mod
 // @namespace    https://shadowyzephyr.github.io
-// @version      1.2.2
+// @version      1.2.3
 // @description  mod
 // @author       ShadowyZephyr
 // @match        https://neal.fun/infinite-craft/
@@ -117,10 +117,11 @@ window.addEventListener('load', function() {
             }
         }, 75);
     });
-    const targetNode = document.querySelector('.sidebar');
+    const targetNode = document.querySelector('.instances','.sidebar');
     domObserver.observe(targetNode, {
         childList: true,
-        subtree: true
+        subtree: true,
+        attributes: false
     });
     async function auto() {
         running2 = false;
