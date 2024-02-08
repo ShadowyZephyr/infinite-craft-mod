@@ -263,7 +263,10 @@ f = function() {
                 let elem2 = document.getElementById('item-' + text[1].trim());
                 elem1.click();
                 elem2.click();
-                await new Promise(r => setTimeout(r, 330));
+                while (elem1.classList.contains('item-selected-mobile')) {
+                    await new Promise(r => setTimeout(r, 50));
+                }
+                await new Promise(r => setTimeout(r, 200));
             }
         }
     }        
