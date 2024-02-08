@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         InfiniteCraft Mod
 // @namespace    https://shadowyzephyr.github.io
-// @version      1.2.3
+// @version      1.3
 // @description  mod
 // @author       ShadowyZephyr
 // @match        https://neal.fun/infinite-craft/
@@ -49,6 +49,18 @@ window.addEventListener('load', function() {
     exporter.style.cursor = 'pointer';
     exporter.addEventListener('click', exportPath);
     document.body.appendChild(exporter);
+    const importer = document.createElement('button');
+    importer.textContent = 'Import Path';
+    importer.style.position = 'absolute';
+    importer.style.left = '0.5%';
+    importer.style.bottom = '37%';
+    importer.style.backgroundColor = 'orange';
+    importer.style.color = 'white';
+    importer.style.border = 'none';
+    importer.style.padding = '10px 20px';
+    importer.style.cursor = 'pointer';
+    importer.addEventListener('click', importPath);
+    document.body.appendChild(importer);
     let pairs = [];
     const reset = document.getElementsByClassName("reset")[0];
     let lastFetch;
@@ -110,7 +122,6 @@ window.addEventListener('load', function() {
             elements = document.getElementsByClassName("mobile-items")[0];
             const r = {discoveries: window.$nuxt.$root.$children[2].$children[0].$children[0]._data.discoveries, elements:window.$nuxt.$root.$children[2].$children[0].$children[0]._data.elements};
             const result = r.elements[r.elements.length-1].text;
-            console.log(result);
             if (combinations[result] === undefined) {
                 combinations[result] = [lastFetch[0], lastFetch[1]];
                 localStorage.setItem('combinations', JSON.stringify(combinations)); 
@@ -145,7 +156,7 @@ window.addEventListener('load', function() {
                 while (x.classList.contains('item-selected-mobile')) {
                     await new Promise(r => setTimeout(r, 50));
                 }
-                await new Promise(r => setTimeout(r, 180)); // Could go faster but you get rate limited
+                await new Promise(r => setTimeout(r, 200)); // Could go faster but you get rate limited
             }
         }
         auto();
@@ -167,7 +178,7 @@ window.addEventListener('load', function() {
             while (x.classList.contains('item-selected-mobile')) {
                 await new Promise(r => setTimeout(r, 50));
             }
-            await new Promise(r => setTimeout(r, 180)); // Could go faster but you get rate limited       
+            await new Promise(r => setTimeout(r, 200)); // Could go faster but you get rate limited       
         }
         running2 = false;
         autoCraftWithElem.style.backgroundColor = 'purple';
@@ -224,6 +235,37 @@ window.addEventListener('load', function() {
         element.click();
    
         document.body.removeChild(element);
+    }
+    function importPath() {
+        const input = document.createElement('input');
+        const reader = new FileReader();
+        input.type = 'file';
+        input.click();
+        input.onchange = e => { 
+            const file = e.target.files[0]; 
+            reader.readAsText(file);
+         }
+        input.remove();
+        reader.onload = e => {
+            var path = reader.result;
+            runPath(path);
+        }
+    }
+    async function runPath(path) {
+        const full = path.split('\n');
+        for (let i = 0; i < full.length; i++) {
+            const line = full[i];
+            let text = line.split(".");
+            text = text.slice(1).join(".");
+            text = text.split(/[+=]/);
+            if (document.getElementById('item-' + text[2].trim()) == null) {
+                let elem1 = document.getElementById('item-' + text[0].trim());
+                let elem2 = document.getElementById('item-' + text[1].trim());
+                elem1.click();
+                elem2.click();
+                await new Promise(r => setTimeout(r, 200));
+            }
+        }
     }        
 }, false);
 })();
