@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         InfiniteCraft Mod
 // @namespace    https://shadowyzephyr.github.io
-// @version      1.3.4
+// @version      1.3.5
 // @description  mod
 // @author       ShadowyZephyr
 // @match        https://neal.fun/infinite-craft/
@@ -38,6 +38,7 @@ let f = function() {
     let pairs = [];
     const reset = document.getElementsByClassName("reset")[0];
     let lastFetch;
+    let rCheck = 'Earth';
     let elements = document.getElementsByClassName("mobile-items")[0];
     let combinations = localStorage.getItem('combinations');
     let importUpdate = false;
@@ -93,23 +94,23 @@ let f = function() {
             inputCraft(window.prompt('Input element to craft with (case-sensitive)'));
         }
     }
-    const domObserver = new MutationObserver((mutations) => {
-        setTimeout(() => {
-            elements = document.getElementsByClassName("mobile-items")[0];
-            const r = {discoveries: window.$nuxt.$root.$children[2].$children[0].$children[0]._data.discoveries, elements:window.$nuxt.$root.$children[2].$children[0].$children[0]._data.elements};
-            const result = r.elements[r.elements.length-1].text;
+    function logCombos() {
+        const r = window.$nuxt.$root.$children[2].$children[0].$children[0]._data.elements;
+        const result = r[r.length-1].text;
+        if (result !== rCheck) {
+            rCheck = result;
             if (combinations[result] === undefined) {
+                wait(50);
                 combinations[result] = [lastFetch[0], lastFetch[1]];
                 localStorage.setItem('combinations', JSON.stringify(combinations)); 
             }
-        }, 75);
-    });
-    const targetNode = document.querySelector('.instances','.sidebar');
-    domObserver.observe(targetNode, {
-        childList: true,
-        subtree: true,
-        attributes: false
-    });
+        }
+    }
+    async function wait(ms) {
+        await new Promise(r => setTimeout(r, ms));
+        return;
+    }    
+    setInterval(logCombos, 10);
     async function auto() {
         running2 = false;
         autoCraftWithElem.style.backgroundColor = 'purple';
