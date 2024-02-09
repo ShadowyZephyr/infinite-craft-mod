@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         InfiniteCraft Mod
 // @namespace    https://shadowyzephyr.github.io
-// @version      1.3.3
+// @version      1.3.4
 // @description  mod
 // @author       ShadowyZephyr
 // @match        https://neal.fun/infinite-craft/
@@ -13,53 +13,27 @@
 (function() {
 let f = function() {
     //You must reset your progress for export paths to work properly, if you have played the game without using this script. (If you want it to work, run from console each time you open the game, or use TamperMonkey, so it saves all combinations)
-    const autoCraft = document.createElement('button');
-    autoCraft.textContent = 'Auto Craft';
-    autoCraft.style.position = 'absolute';
-    autoCraft.style.left = '0.5%';
-    autoCraft.style.bottom = '7%';
-    autoCraft.style.backgroundColor = 'green';
-    autoCraft.style.color = 'white';
-    autoCraft.style.border = 'none';
-    autoCraft.style.padding = '10px 20px';
-    autoCraft.style.cursor = 'pointer';
-    autoCraft.addEventListener('click', run);
+    let createButton = (text, bottom, color, f) => {
+        let button = document.createElement('button');
+        button.textContent = text;
+        button.style.position = 'absolute';
+        button.style.left = '0.5%';
+        button.style.bottom = bottom;
+        button.style.backgroundColor = color;
+        button.style.color = 'white';
+        button.style.border = 'none';
+        button.style.padding = '10px 20px';
+        button.style.cursor = 'pointer';
+        button.addEventListener('click', f);
+        return button;
+    }
+    const autoCraft = createButton("Auto Craft", "7%", 'green', run)
     document.body.appendChild(autoCraft);
-    const autoCraftWithElem = document.createElement('button');
-    autoCraftWithElem.textContent = 'Auto Craft With Element';
-    autoCraftWithElem.style.position = 'absolute';
-    autoCraftWithElem.style.left = '0.5%';
-    autoCraftWithElem.style.bottom = '17%';
-    autoCraftWithElem.style.backgroundColor = 'purple';
-    autoCraftWithElem.style.color = 'white';
-    autoCraftWithElem.style.border = 'none';
-    autoCraftWithElem.style.padding = '10px 20px';
-    autoCraftWithElem.style.cursor = 'pointer';
-    autoCraftWithElem.addEventListener('click', run2);
+    const autoCraftWithElem = createButton("Auto Craft With Element", "17%", "purple", run2)
     document.body.appendChild(autoCraftWithElem);
-    const exporter = document.createElement('button');
-    exporter.textContent = 'Export Path';
-    exporter.style.position = 'absolute';
-    exporter.style.left = '0.5%';
-    exporter.style.bottom = '27%';
-    exporter.style.backgroundColor = 'blue';
-    exporter.style.color = 'white';
-    exporter.style.border = 'none';
-    exporter.style.padding = '10px 20px';
-    exporter.style.cursor = 'pointer';
-    exporter.addEventListener('click', exportPath);
+    const exporter = createButton("Export Path", "27%", 'blue', exportPath)
     document.body.appendChild(exporter);
-    const importer = document.createElement('button');
-    importer.textContent = 'Import Path';
-    importer.style.position = 'absolute';
-    importer.style.left = '0.5%';
-    importer.style.bottom = '37%';
-    importer.style.backgroundColor = 'orange';
-    importer.style.color = 'white';
-    importer.style.border = 'none';
-    importer.style.padding = '10px 20px';
-    importer.style.cursor = 'pointer';
-    importer.addEventListener('click', importPath);
+    const importer = createButton("Import Path", "37%", 'orange', importPath)
     document.body.appendChild(importer);
     let pairs = [];
     const reset = document.getElementsByClassName("reset")[0];
@@ -120,7 +94,6 @@ let f = function() {
         }
     }
     const domObserver = new MutationObserver((mutations) => {
-
         setTimeout(() => {
             elements = document.getElementsByClassName("mobile-items")[0];
             const r = {discoveries: window.$nuxt.$root.$children[2].$children[0].$children[0]._data.discoveries, elements:window.$nuxt.$root.$children[2].$children[0].$children[0]._data.elements};
