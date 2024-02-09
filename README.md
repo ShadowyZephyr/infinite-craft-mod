@@ -5,6 +5,13 @@ If you are pasting into the console and it doesn't load, try running f() in the 
 
 IMPORTANT: For exporting path to work properly you MUST reset your progress before inserting the script, and don't combine without it on or it can't log those recipes.
 
+HOW TO RUN:
+- Click on the text "mod.js" and then click the arrow "Download raw file"
+- Download TamperMonkey Chrome Extension
+- Go to TamperMonkey in extensions and click "add new script" 
+- Drag the mod.js file from your computer into the TamperMonkey Window
+- Click "install"
+
 When you load the mod, 4 buttons will appear:
 
 AUTO CRAFT - Simply automatically crafts your elements together.

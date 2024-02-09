@@ -148,7 +148,7 @@ let f = function() {
                 return;
             }   
             const y = document.getElementById('item-' + elem)
-            const x = elements. children[i].children[0];
+            const x = elements.children[i].children[0];
             x.click();
             y.click();
             while (x.classList.contains('item-selected-mobile')) {
