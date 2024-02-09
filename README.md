@@ -23,4 +23,3 @@ Still a bit buggy, export path can randomly break. Would fix if I knew how.
 
 IMPORT PATH - Select a path from your computer, and it tries to make all the elements in it. If an element in the path has the character "+" or "=" in it, it will break because it uses those to parse combinations.
 
-Bug - Searching elements messes up auto craft (will fix soon)

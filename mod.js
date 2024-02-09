@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         InfiniteCraft Mod
 // @namespace    https://shadowyzephyr.github.io
-// @version      1.3.5
+// @version      1.4
 // @description  mod
 // @author       ShadowyZephyr
 // @match        https://neal.fun/infinite-craft/
@@ -122,7 +122,7 @@ let f = function() {
                     continue;
                 }
                 if (!running) {
-                    await new Promise(r => setTimeout(r, 100));
+                    await wait(100);
                     return;
                 }
                 const x = elements.children[sender].children[0];
@@ -130,10 +130,10 @@ let f = function() {
                 x.click();
                 y.click();
                 pairs.push(sender.toString() + receiver.toString());
-                while (x.classList.contains('item-selected-mobile')) {
-                    await new Promise(r => setTimeout(r, 50));
+                while (window.$nuxt.$root.$children[2].$children[0].$children[0].mobileIsCrafting) {
+                    await wait(50);
                 }
-                await new Promise(r => setTimeout(r, 200)); // Could go faster but you get rate limited
+                await wait(200); // Could go faster but you get rate limited
             }
         }
         auto();
@@ -145,17 +145,17 @@ let f = function() {
         let amount = elements.children.length;
         for (let i = 0; i < amount - 1; i++) {
             if (!running2) {
-                await new Promise(r => setTimeout(r, 100));
+                await wait(100);
                 return;
             }   
             const y = document.getElementById('item-' + elem)
             const x = elements.children[i].children[0];
             x.click();
             y.click();
-            while (x.classList.contains('item-selected-mobile')) {
-                await new Promise(r => setTimeout(r, 50));
+            while (window.$nuxt.$root.$children[2].$children[0].$children[0].mobileIsCrafting) {
+                await wait(50);
             }
-            await new Promise(r => setTimeout(r, 200)); // Could go faster but you get rate limited       
+            await wait(200); // Could go faster but you get rate limited       
         }
         running2 = false;
         autoCraftWithElem.style.backgroundColor = 'purple';
@@ -242,10 +242,10 @@ let f = function() {
                 elem2.click();
                 for(let j = 0; j < 20; j++) {
                     if (!importUpdate) {
-                        await new Promise(r => setTimeout(r, 50));
+                        await wait(50);
                     }
                 }
-                await new Promise(r => setTimeout(r, 200));
+                await wait(200);
                 importUpdate = false;
             }
         }
